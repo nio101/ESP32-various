@@ -1,0 +1,3 @@
+# globally ignore any password file
+# .ini.pass.template files should be provided instead
+*.ini.pass
