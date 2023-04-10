@@ -76,13 +76,17 @@ def fs_size():
 
 # boot
 esp.osdebug(None)
-gc.collect()
 print()
 print("=== boot.py ===")
 
 # check if the device woke from a deep sleep
 if reset_cause() == DEEPSLEEP_RESET:
     print('>> woke up from a deep sleep!')
+
+print("RAM_size: {0:0.1f}MB ".format(gc.mem_free()/(1024*1024)))
+print("flash_size: {0:0.1f}MB ".format(esp.flash_size()/(1024*1024)))
+print(fs_size())
+gc.collect()
 
 config = configparser.ConfigParser()
 
@@ -97,7 +101,6 @@ wlan_connect(ssid=config.get('wifi', 'ssid'), password=password, hostname=config
 # ladern
 #wlan_connect(ssid='Livebox-3586_MAISON', password='iWVNmv3fQS4c3nctAk', hostname='odin')
 #AP_create(ssid='gazotron', password='13371337')
-print(fs_size())
 
 ntptime.timeout = 15
 ntptime.settime()
@@ -105,3 +108,6 @@ ntptime.settime()
 daylightsavingtime.compute_UTC_offset()
 now = daylightsavingtime.actual_now()
 print('now is', daylightsavingtime.localtime_to_string(now))
+
+print()
+
